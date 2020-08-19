@@ -1,20 +1,13 @@
 package com.example.studo.ui.main.viewModel
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.studo.Networking
-import com.example.studo.data.model.AuthResponse
 import com.example.studo.data.model.Job
-import com.example.studo.data.model.JobsResponse
-import com.example.studo.data.repository.JobRepository
+import com.example.studo.data.model.response.JobsResponse
 import com.example.studo.utils.Resource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

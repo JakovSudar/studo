@@ -2,11 +2,14 @@ package com.example.studo.ui.auth.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.studo.R
 import com.example.studo.ui.auth.viewModel.AuthViewModel
+import com.example.studo.ui.auth.viewModel.LOGIN
+import com.example.studo.ui.auth.viewModel.REGISTER
+
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var authViewModel: AuthViewModel
@@ -21,11 +24,15 @@ class AuthActivity : AppCompatActivity() {
 
     private fun setUpObservers() {
         this.authViewModel.loginNavigation.observe(this, Observer {
-            if(it == "LOGIN"){
-                showLogin()
-            }else{
-                showRegistration()
+            when(it){
+                LOGIN ->{
+                    showLogin()
+                }
+                REGISTER ->{
+                    showRegistration()
+                }
             }
+
         })
     }
 

@@ -1,7 +1,7 @@
-package com.example.studo.data.model
+package com.example.studo.data.model.response
 import com.google.gson.annotations.SerializedName
 
-data class AuthResponse (
+data class LoginResponse (
     @SerializedName("token_type")
     val tokenType: String,
     @SerializedName("expires_in")
@@ -10,4 +10,5 @@ data class AuthResponse (
     val accessToken :String,
     @SerializedName("refresh_token")
     val refreshToken:String
+
 )

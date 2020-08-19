@@ -5,8 +5,17 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.auth.view.RegisterFragment">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -25,6 +34,19 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginBottom="10dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -36,6 +58,7 @@
             android:layout_marginBottom="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
@@ -47,12 +70,51 @@
             android:layout_marginBottom="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_rpassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/rg_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:checkedButton="@+id/rb_student"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1" >
+                </Space>
+                <RadioButton
+                    android:id="@+id/rb_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Student"/>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1" >
+                </Space>
+                <RadioButton
+                    android:id="@+id/rb_poslodavac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Poslodavac"/>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1" >
+                </Space>
+            </RadioGroup>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -87,9 +149,7 @@
                 android:layout_height="1dp"
                 android:layout_weight="1" >
             </Space>
+
         </LinearLayout>
-
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

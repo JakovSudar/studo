@@ -2,6 +2,7 @@ package com.example.studo
 
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.example.studo.data.api.ApiService
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +17,10 @@ object Networking{
 }
 
 object ConverterFactory{
-    val converterFactory = GsonConverterFactory.create()
+    val gson = GsonBuilder()
+        .setLenient()
+        .create()
+    val converterFactory = GsonConverterFactory.create(gson)
 }
 
 object HttpClient{
