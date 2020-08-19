@@ -10,7 +10,7 @@ class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Fac
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(JobRepository(apiHelper)) as T
+            return MainViewModel() as T
         }
         throw IllegalArgumentException("Unknown class name")
     }

@@ -24,6 +24,7 @@
             android:background="@drawable/ic_settings_black_24dp" />
 
         <ImageButton
+            android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

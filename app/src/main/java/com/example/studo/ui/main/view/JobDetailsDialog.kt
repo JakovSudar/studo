@@ -23,6 +23,20 @@ class JobDetailsDialog(private val job: Job): DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setUpUi()
+    }
+
+    private fun setUpUi() {
+        btnApply.setOnClickListener{
+            applyOnJob(job)
+        }
+        btnClose.setOnClickListener{
+            dismiss()
+        }
+    }
+
+    private fun applyOnJob( job :Job) {
+        TODO("Not yet implemented")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,5 +47,7 @@ class JobDetailsDialog(private val job: Job): DialogFragment() {
         zahtjevi.text = job.requirements
         jobTitleDialog.text = job.employer
     }
+
+
 
 }

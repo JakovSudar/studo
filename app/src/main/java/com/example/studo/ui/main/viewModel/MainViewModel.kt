@@ -1,21 +1,28 @@
 package com.example.studo.ui.main.viewModel
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.studo.Networking
+import com.example.studo.data.model.AuthResponse
 import com.example.studo.data.model.Job
+import com.example.studo.data.model.JobsResponse
 import com.example.studo.data.repository.JobRepository
 import com.example.studo.utils.Resource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_login.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class MainViewModel(private val jobRepository: JobRepository) :ViewModel(){
+class MainViewModel() :ViewModel(){
     private var jobs = MutableLiveData<Resource<List<Job>>>()
-    private var jobsList = mutableListOf<Job>()
+    var jobsList = mutableListOf<Job>()
     var job = MutableLiveData<Job>()
-    private val compositeDisposable = CompositeDisposable()
 
     init {
         fetchJobs()
@@ -29,24 +36,22 @@ class MainViewModel(private val jobRepository: JobRepository) :ViewModel(){
 
     private fun fetchJobs() {
         jobs.postValue(Resource.loading(null))
-        compositeDisposable.add(
-            jobRepository.getJobs()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    jobsResponse ->
-                    run { jobs.postValue(Resource.success(jobsResponse.jobs))
-                            this.jobsList= jobsResponse.jobs as MutableList<Job>
-                    }
-                },{throwable ->
-                    jobs.postValue(Resource.error("Something went wrong", null))
-                })
-        )
-    }
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+        Networking.apiService.getJobs().enqueue(
+            object : Callback<JobsResponse> {
+                override fun onFailure(call: Call<JobsResponse>, t: Throwable) {
+                    jobs.postValue(Resource.error("Something went wrong",null))
+                }
+
+                override fun onResponse(
+                    call: Call<JobsResponse>,
+                    response: Response<JobsResponse>
+                ) {
+                    jobs.postValue(Resource.success(response.body()?.jobs))
+                    jobsList= response.body()?.jobs as MutableList<Job>
+                }
+            }
+        )
     }
 
     fun getJobs(): LiveData<Resource<List<Job>>>{
