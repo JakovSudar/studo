@@ -71,7 +71,6 @@ class AuthViewModel: ViewModel() {
                 override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                     registerResponse.postValue(Resource.error("Network problem",null))
                     Log.v("retrofit", t.message)
-
                 }
 
                 override fun onResponse(

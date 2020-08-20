@@ -1,6 +1,7 @@
 package com.example.studo.ui.auth.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.fragment_register.registerBtn
 class RegisterFragment() : Fragment() {
 
     private lateinit var authViewModel: AuthViewModel
+    var hasError: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,14 +50,18 @@ class RegisterFragment() : Fragment() {
             when(it.status){
                 Status.SUCCESS->{
                     progressBar.visibility = View.GONE
+                    tv_progress.visibility = View.GONE
                     Toast.makeText(context,"Registered", Toast.LENGTH_LONG).show()
                     layout.visibility = View.VISIBLE
+
                 }
                 Status.LOADING ->{
                     progressBar.visibility = View.VISIBLE
+                    tv_progress.visibility = View.VISIBLE
                     layout.visibility = View.GONE
                 }
                 Status.ERROR->{
+                    tv_progress.visibility = View.GONE
                     progressBar.visibility = View.GONE
                     Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     layout.visibility = View.VISIBLE
@@ -69,20 +75,18 @@ class RegisterFragment() : Fragment() {
     }
 
     private fun setUpUi() {
+        tv_progress.visibility = View.GONE
         progressBar.visibility = View.GONE
         loginBtn.setOnClickListener{
             this.authViewModel.showLogin()
         }
         registerBtn.setOnClickListener {
+            clearErrors()
+
             authViewModel.username = et_username.text.toString()
             authViewModel.password = et_password.text.toString()
             authViewModel.rpassword = et_rpassword.text.toString()
             authViewModel.email = et_email.text.toString()
-
-            authViewModel.username = "username@gmail.com"
-            authViewModel.password = "jakov123j"
-            authViewModel.rpassword = "jakov123j"
-            authViewModel.email = "email@gmail.com"
 
             if(rb_student.isChecked){
                 authViewModel.type = STUDENT
@@ -90,14 +94,46 @@ class RegisterFragment() : Fragment() {
                 authViewModel.type = EMPLOYER
             }
 
-            authViewModel.register()
+            checkInputs()
+            if(!hasError){
+                authViewModel.register()
+            }
         }
+    }
 
+    private fun checkInputs() {
+            hasError = false
+        if(!authViewModel.email.isEmailValid()){
+            ly_email.error = "Unesite ispravan mail"
+            hasError = true
+        }
+        if(authViewModel.username.isEmpty()){
+            ly_username.error = "Obavezno polje!"
+            hasError = true
+        }
+        if(authViewModel.password.length < 6){
+            ly_password.error = "Minimalno 6 znakova"
+            hasError = true
+        }
+        if(authViewModel.password != authViewModel.rpassword){
+            ly_rpassword.error = "Lozinke se ne podudaraju"
+            hasError = true
+        }
+    }
+
+    private fun clearErrors() {
+        ly_password.error= null
+        ly_username.error= null
+        ly_email.error= null
+        ly_rpassword.error = null
     }
 
     companion object {
         @JvmStatic
         fun newInstance() =
             RegisterFragment()
+    }
+    fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 }

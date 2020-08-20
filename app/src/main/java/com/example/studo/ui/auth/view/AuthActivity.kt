@@ -9,6 +9,8 @@ import com.example.studo.R
 import com.example.studo.ui.auth.viewModel.AuthViewModel
 import com.example.studo.ui.auth.viewModel.LOGIN
 import com.example.studo.ui.auth.viewModel.REGISTER
+import com.example.studo.utils.Status
+
 
 
 class AuthActivity : AppCompatActivity() {
@@ -32,7 +34,23 @@ class AuthActivity : AppCompatActivity() {
                     showRegistration()
                 }
             }
+        })
 
+        this.authViewModel.registerResponse().observe(this, Observer {
+            when(it.status){
+                Status.SUCCESS->{
+                    showLogin()
+                    authViewModel.login()
+                }
+            }
+        })
+
+        this.authViewModel.loginResponse().observe(this, Observer {
+            when(it.status){
+                Status.SUCCESS->{
+                    finish()
+                }
+            }
         })
     }
 
