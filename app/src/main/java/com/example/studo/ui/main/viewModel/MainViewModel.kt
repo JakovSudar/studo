@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.studo.Networking
+import com.example.studo.helpers.Networking
 import com.example.studo.data.model.Job
 import com.example.studo.data.model.response.JobsResponse
 import com.example.studo.utils.Resource

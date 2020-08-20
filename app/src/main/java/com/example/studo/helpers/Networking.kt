@@ -1,4 +1,4 @@
-package com.example.studo
+package com.example.studo.helpers
 
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.example.studo.data.api.ApiService

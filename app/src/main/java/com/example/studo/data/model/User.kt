@@ -5,5 +5,6 @@ data class User (
     val name : String,
     val type : String,
     val verified : Int,
-    val id : Int
+    val id : Int,
+    val accessToken: String
 )

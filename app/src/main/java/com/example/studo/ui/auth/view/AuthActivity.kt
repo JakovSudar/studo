@@ -1,5 +1,7 @@
 package com.example.studo.ui.auth.view
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -9,6 +11,7 @@ import com.example.studo.R
 import com.example.studo.ui.auth.viewModel.AuthViewModel
 import com.example.studo.ui.auth.viewModel.LOGIN
 import com.example.studo.ui.auth.viewModel.REGISTER
+import com.example.studo.ui.main.view.MainActivity
 import com.example.studo.utils.Status
 
 
@@ -48,6 +51,9 @@ class AuthActivity : AppCompatActivity() {
         this.authViewModel.loginResponse().observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
+                   val loginResult = Intent()
+                    loginResult.putExtra(MainActivity.KEY_LOGIN,true)
+                    setResult(Activity.RESULT_OK, loginResult)
                     finish()
                 }
             }

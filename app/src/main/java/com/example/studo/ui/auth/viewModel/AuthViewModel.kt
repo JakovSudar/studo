@@ -1,15 +1,17 @@
 package com.example.studo.ui.auth.viewModel
 
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.studo.Networking
 import com.example.studo.data.model.User
+import com.example.studo.helpers.Networking
 import com.example.studo.data.model.response.LoginResponse
 import com.example.studo.data.model.request.UserDataRequest
 import com.example.studo.data.model.response.RegisterResponse
+import com.example.studo.helpers.PreferenceManager
 import com.example.studo.utils.Resource
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +33,7 @@ class AuthViewModel: ViewModel() {
     var rpassword: String= "a"
     var email: String = ""
     var type: String =""
+    var id: Int = -1
 
     fun showLogin(){
         this.loginNavigation.postValue(LOGIN)
@@ -56,6 +59,8 @@ class AuthViewModel: ViewModel() {
                         return
                     }
                     loginResponse.postValue(Resource.success(response.body()))
+                    val user = User(email,username,type,0,id,response.body()!!.accessToken)
+                    PreferenceManager().saveUser(user)
                 }
             }
         )
@@ -82,6 +87,7 @@ class AuthViewModel: ViewModel() {
                         return
                     }
                     registerResponse.postValue(Resource.success(response.body()))
+                    id = response.body()!!.user.id
                 }
             }
         )
