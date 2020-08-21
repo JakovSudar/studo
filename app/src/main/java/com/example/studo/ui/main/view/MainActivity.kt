@@ -42,6 +42,12 @@ class MainActivity : AppCompatActivity() {
         setUpViewModel()
         setUpUi()
         setUpObserver()
+        getLoggedUser()
+    }
+
+    private fun getLoggedUser() {
+        val user : User =  PreferenceManager().retriveUser()
+        mainViewModel.setUser(user)
     }
 
     private fun setUpUi() {
@@ -55,7 +61,8 @@ class MainActivity : AppCompatActivity() {
         )
         recyclerView.adapter = adapter
 
-        btn_Login.setOnClickListener{
+        btn_Profile.setOnClickListener{
+            
             val authIntent = Intent(this, AuthActivity::class.java)
             startActivityForResult(authIntent,REQUEST_AUTH )
         }
@@ -65,7 +72,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openNewJobDialog() {
-        TODO("Not yet implemented")
+        var fm = supportFragmentManager
+        var dialogFragment = NewJobDialog()
+        dialogFragment.show(fm,"Dialog fragment")
     }
 
     private fun setUpObserver() {
@@ -111,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                     if(resultCode == Activity.RESULT_OK){
                         Log.d("Activity result", "Logged")
                         val user = PreferenceManager().retriveUser()
-
+                        mainViewModel.setUser(user)
 
                     }else
                         Log.d("Activity result", "Canceled")

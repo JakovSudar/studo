@@ -1,6 +1,8 @@
 package com.example.studo.data.api
 
+import com.example.studo.data.model.Job
 import com.example.studo.data.model.User
+import com.example.studo.data.model.request.NewJobRequest
 import com.example.studo.data.model.response.LoginResponse
 import com.example.studo.data.model.response.JobsResponse
 import com.example.studo.data.model.request.UserDataRequest
@@ -21,4 +23,7 @@ interface ApiService {
 
     @GET("user")
     fun whoIsLogged(@Header("Authorization") Authorization: String): Call<User>
+
+    @POST("users/{userId}/jobs")
+    fun postNewJob(@Body newJobRequest: Job, @Path("userId") userId: Int) :Call<Job>
 }
