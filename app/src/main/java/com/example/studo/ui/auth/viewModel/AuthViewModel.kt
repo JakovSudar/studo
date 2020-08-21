@@ -21,7 +21,7 @@ const val LOGIN = "LOGIN"
 const val REGISTER = "REGISTER"
 
 const val STUDENT = "student"
-const val EMPLOYER = "poslodavac"
+const val EMPLOYER = "employer"
 
 class AuthViewModel: ViewModel() {
 
@@ -52,15 +52,31 @@ class AuthViewModel: ViewModel() {
                     loginResponse.postValue(Resource.error("Network problem",null))
                     Log.v("retrofit", t.message)
                 }
-
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if(!response.isSuccessful){
                         loginResponse.postValue(Resource.error("Wrong credentials",null))
                         return
                     }
                     loginResponse.postValue(Resource.success(response.body()))
-                    val user = User(email,username,type,0,id,response.body()!!.accessToken)
-                    PreferenceManager().saveUser(user)
+                    var user = User(email,username,type,0,id,response.body()!!.accessToken)
+                    if(user.type == ""){
+                        Networking.apiService.whoIsLogged("Bearer " + user.accessToken).enqueue(object :
+                            Callback<User>{
+                            override fun onFailure(call: Call<User>, t: Throwable) {
+                                Log.d("Who is logged", "error")
+                            }
+
+                            override fun onResponse(call: Call<User>, response: Response<User>) {
+                                user.name = response.body()!!.name
+                                user.type = response.body()!!.type
+                                user.id = response.body()!!.id
+                                Log.d("Who is logged", user.toString())
+                                PreferenceManager().saveUser(user)
+                            }
+                        })
+                    }else
+                        PreferenceManager().saveUser(user)
+
                 }
             }
         )

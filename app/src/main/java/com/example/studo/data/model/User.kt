@@ -2,9 +2,9 @@ package com.example.studo.data.model
 
 data class User (
     val email : String,
-    val name : String,
-    val type : String,
+    var name : String,
+    var type : String,
     val verified : Int,
-    val id : Int,
+    var id : Int,
     val accessToken: String
 )

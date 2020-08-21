@@ -14,12 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studo.R
 import com.example.studo.data.api.ApiHelper
 import com.example.studo.data.model.Job
+import com.example.studo.data.model.User
+import com.example.studo.helpers.Networking
+import com.example.studo.helpers.PreferenceManager
 import com.example.studo.ui.auth.view.AuthActivity
 import com.example.studo.ui.base.ViewModelFactory
 import com.example.studo.ui.main.adapter.MainAdapter
 import com.example.studo.ui.main.viewModel.MainViewModel
 import com.example.studo.utils.Status
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,10 +55,17 @@ class MainActivity : AppCompatActivity() {
         )
         recyclerView.adapter = adapter
 
-        btnLogin.setOnClickListener{
+        btn_Login.setOnClickListener{
             val authIntent = Intent(this, AuthActivity::class.java)
             startActivityForResult(authIntent,REQUEST_AUTH )
         }
+        btn_addJob.setOnClickListener {
+            openNewJobDialog()
+        }
+    }
+
+    private fun openNewJobDialog() {
+        TODO("Not yet implemented")
     }
 
     private fun setUpObserver() {
@@ -97,6 +110,9 @@ class MainActivity : AppCompatActivity() {
             REQUEST_AUTH->{
                     if(resultCode == Activity.RESULT_OK){
                         Log.d("Activity result", "Logged")
+                        val user = PreferenceManager().retriveUser()
+
+
                     }else
                         Log.d("Activity result", "Canceled")
                  }

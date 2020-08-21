@@ -91,7 +91,7 @@ class PreferenceManager {
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
-        return sharedPreferences.getString(PREFS_KEY_TOKEN, DEF_VAL)!!
+        return sharedPreferences.getString(PREFS_KEY_TYPE, DEF_VAL)!!
     }
     fun getId(): String{
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
