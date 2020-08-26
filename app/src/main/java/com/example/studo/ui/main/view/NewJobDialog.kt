@@ -28,7 +28,11 @@ class NewJobDialog : DialogFragment() {
     }
     override fun onStart() {
         super.onStart()
-        dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         progressBar.visibility = View.GONE
         tv_progress.visibility = View.GONE
         setUpUi()
@@ -48,6 +52,7 @@ class NewJobDialog : DialogFragment() {
             Log.d("New Job", job.toString())
             if(!hasError){
                 jobsViewModel.postNewJob(job)
+                dismiss()
             }else{
                 scrollView.fullScroll(View.FOCUS_UP);
                 scrollView.scrollTo(0,0)
@@ -98,7 +103,6 @@ class NewJobDialog : DialogFragment() {
             ly_employer.error= "Obavezno polje!"
             hasError = true
         }
-
     }
 
     private fun getJobData(): Job {
@@ -110,7 +114,7 @@ class NewJobDialog : DialogFragment() {
         val wage : Double = if (et_wage.text.toString().isEmpty()) 0.0 else et_wage.text.toString().toDouble()
         val requirements = et_requirements.text.toString()
         val employer = et_employer.text.toString()
-        return Job(-1,title,description,category,city,wage,requirements,employer,"")
+        return Job(-1,title,description,category,city,wage,requirements,employer,"",null,-1)
     }
 
     private fun populateDropDowns(){

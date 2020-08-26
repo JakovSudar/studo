@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:clickable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.main.view.ProfileFragment">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        android:text="Dohvaćanje poslova"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <Button
+        android:id="@+id/btn_logOut"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/red"
+        android:text="Odjava"
+        android:textSize="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="38dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@drawable/ic_person_blue_24dp" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:text="Jakov Sudar"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="12dp">
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tip profila: Student"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: nesto@gmail.com"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profileJobs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

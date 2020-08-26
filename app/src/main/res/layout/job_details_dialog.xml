@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,10 +11,10 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="Posao"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         android:textSize="26dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +35,7 @@
 
     <TextView
         android:id="@+id/satnica"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
@@ -59,7 +58,7 @@
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
@@ -82,7 +81,7 @@
 
     <TextView
         android:id="@+id/opis"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
@@ -105,7 +104,7 @@
 
     <TextView
         android:id="@+id/zahtjevi"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
@@ -114,6 +113,29 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/zahtjeviTitle"
         app:layout_constraintTop_toBottomOf="@+id/opis" />
+
+    <TextView
+        android:id="@+id/employerTitle"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Tvrtka: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/employer" />
+
+    <TextView
+        android:id="@+id/employer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:text="Neka tvrtka"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/employerTitle"
+        app:layout_constraintTop_toBottomOf="@+id/zahtjevi" />
 
     <Button
         android:id="@+id/btnClose"

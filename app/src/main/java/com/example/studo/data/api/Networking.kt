@@ -1,7 +1,6 @@
-package com.example.studo.helpers
+package com.example.studo.data.api
 
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
-import com.example.studo.data.api.ApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

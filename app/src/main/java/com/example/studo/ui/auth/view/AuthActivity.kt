@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.studo.R
+import com.example.studo.helpers.PreferenceManager
 import com.example.studo.ui.auth.viewModel.AuthViewModel
 import com.example.studo.ui.auth.viewModel.LOGIN
 import com.example.studo.ui.auth.viewModel.REGISTER
@@ -51,7 +53,17 @@ class AuthActivity : AppCompatActivity() {
         this.authViewModel.loginResponse().observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
-                   val loginResult = Intent()
+
+                }
+            }
+        })
+
+        this.authViewModel.loggedUser.observe(this, Observer {
+            when(it.status){
+                Status.SUCCESS->{
+                    PreferenceManager().saveUser(it.data!!)
+                    Log.d("SAVED", it.data.toString())
+                    val loginResult = Intent()
                     loginResult.putExtra(MainActivity.KEY_LOGIN,true)
                     setResult(Activity.RESULT_OK, loginResult)
                     finish()

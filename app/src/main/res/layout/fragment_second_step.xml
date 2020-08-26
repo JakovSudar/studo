@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.view.steps.SecondStepFragment">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="30dp"
+            app:errorEnabled="true"
+            android:id="@+id/ly_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unesite email za kontakt"
+            android:layout_marginBottom="6dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="30dp"
+            app:errorEnabled="true"
+            android:id="@+id/ly_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unesite broj za kontakt"
+            android:layout_marginBottom="6dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_marginTop="30dp"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:text="Nazad"/>
+            <Space
+                android:layout_width="60dp"
+                android:layout_height="1dp"/>
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_marginTop="30dp"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:text="Dalje"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -2,6 +2,7 @@ package com.example.studo.helpers
 
 import android.content.Context
 import android.util.Log
+import androidx.core.content.edit
 import com.example.studo.data.model.User
 
 class PreferenceManager {
@@ -23,11 +24,17 @@ class PreferenceManager {
         saveEmail(user.email)
 
     }
+    fun deleteUser(){
+        val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
+            PREFS_FILE, Context.MODE_PRIVATE
+        )
+        sharedPreferences.edit().clear().commit()
+    }
     fun retriveUser(): User{
         val user = User(getEmail(),getUsername(),getType(),0,getId().toInt(),getToken())
         return user
     }
-    fun saveToken(accesToken: String) {
+    private fun saveToken(accesToken: String) {
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
@@ -35,7 +42,7 @@ class PreferenceManager {
         editor.putString(PREFS_KEY_TOKEN, accesToken)
         editor.apply()
     }
-    fun saveUsername(username: String){
+    private fun saveUsername(username: String){
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
@@ -44,7 +51,7 @@ class PreferenceManager {
         editor.apply()
     }
 
-    fun saveType(type: String){
+    private fun saveType(type: String){
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
@@ -52,7 +59,7 @@ class PreferenceManager {
         editor.putString(PREFS_KEY_TYPE, type)
         editor.apply()
     }
-    fun saveEmail(type: String){
+    private fun saveEmail(type: String){
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
@@ -61,7 +68,7 @@ class PreferenceManager {
         editor.apply()
     }
 
-    fun saveId(id: String){
+    private fun saveId(id: String){
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
@@ -69,34 +76,35 @@ class PreferenceManager {
         editor.putString(PREFS_KEY_ID, id)
         editor.apply()
     }
-    fun getUsername(): String {
+    private fun getUsername(): String {
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
         return sharedPreferences.getString(PREFS_KEY_USERNAME, DEF_VAL)!!
     }
-    fun getEmail(): String {
+    private fun getEmail(): String {
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
         return sharedPreferences.getString(PREFS_KEY_EMAIL, DEF_VAL)!!
     }
-    fun getToken(): String{
+    private fun getToken(): String{
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
         return sharedPreferences.getString(PREFS_KEY_TOKEN, DEF_VAL)!!
     }
-    fun getType(): String{
+    private fun getType(): String{
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
         return sharedPreferences.getString(PREFS_KEY_TYPE, DEF_VAL)!!
     }
-    fun getId(): String{
+    private fun getId(): String{
         val sharedPreferences = StudoApplication.ApplicationContext.getSharedPreferences(
             PREFS_FILE, Context.MODE_PRIVATE
         )
-        return sharedPreferences.getString(PREFS_KEY_ID, DEF_VAL)!!
+
+        return sharedPreferences.getString(PREFS_KEY_ID, "-1")!!
     }
 }

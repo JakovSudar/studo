@@ -1,4 +1,6 @@
 package com.example.studo.data.model
+import android.app.Application
+import com.example.studo.data.model.response.ApplicationResponse
 import com.google.gson.annotations.SerializedName
 
 data class Job (
@@ -19,5 +21,9 @@ data class Job (
     @SerializedName("employer")
     val employer: String = "",
     @SerializedName("notes")
-    val notes: String =""
+    val notes: String ="",
+    @SerializedName ("applications")
+    var applications: List<ApplicationResponse>?,
+
+    var applicationId: Int
 )

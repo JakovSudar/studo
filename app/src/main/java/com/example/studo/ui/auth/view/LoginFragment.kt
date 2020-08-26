@@ -46,7 +46,7 @@ class LoginFragment() : Fragment() {
     }
 
     private fun setUpObserver() {
-        authViewModel.loginResponse().observe(this, Observer {
+        authViewModel.loggedUser.observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
                     tv_progress.visibility = View.GONE
@@ -89,6 +89,8 @@ class LoginFragment() : Fragment() {
         hideKeyboard()
         authViewModel.password = et_password.text.toString()
         authViewModel.email = (et_email.text.toString())
+        authViewModel.email = "esther.hermiston@example.net"
+        authViewModel.password = "secret"
         checkInputs()
         if(!hasError){
             authViewModel.login()

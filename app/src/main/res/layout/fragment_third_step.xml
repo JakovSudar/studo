@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.view.steps.ThirdStepFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+        <TextView
+
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pregled prijave"
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/tv_aboutMe"
+            android:text="O meni: Ja sam jakov sudar"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_email"
+            android:text="Email: jakovsudar@gmail.com"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_phone"
+            android:text="Mobitel: 0923441966"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Nazad"/>
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="1dp"/>
+
+            <Button
+                android:id="@+id/btn_apply"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Pošalji"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

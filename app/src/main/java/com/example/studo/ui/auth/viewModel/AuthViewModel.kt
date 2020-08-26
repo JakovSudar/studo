@@ -1,13 +1,12 @@
 package com.example.studo.ui.auth.viewModel
 
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.studo.data.model.User
-import com.example.studo.helpers.Networking
+import com.example.studo.data.api.Networking
 import com.example.studo.data.model.response.LoginResponse
 import com.example.studo.data.model.request.UserDataRequest
 import com.example.studo.data.model.response.RegisterResponse
@@ -24,7 +23,7 @@ const val STUDENT = "student"
 const val EMPLOYER = "employer"
 
 class AuthViewModel: ViewModel() {
-
+    var loggedUser = MutableLiveData<Resource<User>>()
     var loginNavigation = MutableLiveData<String>()
     var loginResponse = MutableLiveData<Resource<LoginResponse>>()
     var registerResponse = MutableLiveData<Resource<RegisterResponse>>()
@@ -44,7 +43,7 @@ class AuthViewModel: ViewModel() {
 
     fun login(){
         val userData = UserDataRequest(email,password,null,null, null)
-        loginResponse.postValue(Resource.loading(null))
+        loggedUser.postValue(Resource.loading(null))
         Log.d("Login credentials", userData.toString())
         Networking.apiService.login(userData).enqueue(
             object : Callback<LoginResponse> {
@@ -54,29 +53,25 @@ class AuthViewModel: ViewModel() {
                 }
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if(!response.isSuccessful){
-                        loginResponse.postValue(Resource.error("Wrong credentials",null))
+                        loggedUser.postValue(Resource.error("Wrong credentials",null))
                         return
                     }
-                    loginResponse.postValue(Resource.success(response.body()))
                     var user = User(email,username,type,0,id,response.body()!!.accessToken)
                     if(user.type == ""){
                         Networking.apiService.whoIsLogged("Bearer " + user.accessToken).enqueue(object :
                             Callback<User>{
                             override fun onFailure(call: Call<User>, t: Throwable) {
-                                Log.d("Who is logged", "error")
+                                loggedUser.postValue(Resource.error(t.message.toString(),null))
                             }
-
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 user.name = response.body()!!.name
                                 user.type = response.body()!!.type
                                 user.id = response.body()!!.id
-                                Log.d("Who is logged", user.toString())
-                                PreferenceManager().saveUser(user)
+                                loggedUser.postValue(Resource.success(user))
                             }
                         })
                     }else
-                        PreferenceManager().saveUser(user)
-
+                        loggedUser.postValue(Resource.success(user))
                 }
             }
         )
@@ -108,6 +103,8 @@ class AuthViewModel: ViewModel() {
             }
         )
     }
+
+
 
     fun loginResponse(): LiveData<Resource<LoginResponse>>{
         return loginResponse
