@@ -3,7 +3,7 @@ package com.example.studo.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.studo.data.api.ApiHelper
-import com.example.studo.data.repository.JobRepository
+
 import com.example.studo.ui.main.viewModel.MainViewModel
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {

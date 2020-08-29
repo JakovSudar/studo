@@ -1,15 +1,20 @@
 package com.example.studo.ui.main.adapter
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studo.R
 import com.example.studo.data.model.response.ApplicationResponse
+import com.example.studo.helpers.StudoApplication
 import kotlinx.android.synthetic.main.application_item.view.*
+
 
 class ApplicationsAdapter() : RecyclerView.Adapter<ApplicationsAdapter.DataViewHolder>() {
     var applications = ArrayList<ApplicationResponse>()
@@ -29,6 +34,14 @@ class ApplicationsAdapter() : RecyclerView.Adapter<ApplicationsAdapter.DataViewH
                     it.setBackgroundResource(R.drawable.border_choosen)
                 else
                     it.setBackgroundResource(R.drawable.border)
+            }
+
+            itemView.setOnLongClickListener{
+                val callIntent = Intent(Intent.ACTION_DIAL)
+                callIntent.data = Uri.parse("tel:" + application.phone)
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(StudoApplication.ApplicationContext,callIntent,null)
+                true
             }
         }
 

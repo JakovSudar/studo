@@ -58,6 +58,19 @@ class AppliedStudentsDialog(val job: Job): DialogFragment() {
             }
             startActivity(Intent.createChooser(emailIntent, "Send feedback"))
         }
+        btn_choseAll.setOnClickListener {
+            if(rv_appliedStudents.children.first().findViewById<CheckBox>(R.id.checkbox).isChecked){
+                for (application in rv_appliedStudents.children){
+                    application.findViewById<CheckBox>(R.id.checkbox).isChecked = false
+                    application.setBackgroundResource(R.drawable.border)
+                }
+            }else{
+                for (application in rv_appliedStudents.children){
+                    application.findViewById<CheckBox>(R.id.checkbox).isChecked = true
+                    application.setBackgroundResource(R.drawable.border_choosen)
+                }
+            }
+        }
     }
 
     private fun getCheckedMails(): String {

@@ -17,6 +17,7 @@ import com.example.studo.ui.main.view.steps.ThirdStepFragment
 import com.example.studo.ui.main.viewModel.JobApplyViewModel
 import com.example.studo.utils.Resource
 import com.example.studo.utils.Status
+import kotlinx.android.synthetic.main.applied_students_dialog.*
 import kotlinx.android.synthetic.main.job_apply_dialog.*
 import java.lang.Exception
 
@@ -45,6 +46,8 @@ class JobApplyDialog(val job: Job) : DialogFragment() {
         progressBar.visibility = View.GONE
         tv_progress.visibility = View.GONE
     }
+
+
 
     private fun setUpObserver() {
         this.applyViewModel.step.observe(this, Observer {

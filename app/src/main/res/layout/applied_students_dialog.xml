@@ -9,11 +9,11 @@
         android:padding="5dp"
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
             android:id="@+id/tv_jobTitle"
@@ -48,6 +48,17 @@
         android:background="@drawable/ic_email_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_choseAll"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="10dp"
+        android:text="svi"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_appliedStudents"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_appliedStudents"
