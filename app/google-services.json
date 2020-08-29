@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "130409299549",
+    "firebase_url": "https://studo-79a44.firebaseio.com",
+    "project_id": "studo-79a44",
+    "storage_bucket": "studo-79a44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130409299549:android:9ffbd9825a51e2277dd7b4",
+        "android_client_info": {
+          "package_name": "com.example.studo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130409299549-etprn46h5l884mupimsf1aeot3g7d81u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc3FXJIwJO2JMY0FoJ_cC7js-UKcsHwLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130409299549-etprn46h5l884mupimsf1aeot3g7d81u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

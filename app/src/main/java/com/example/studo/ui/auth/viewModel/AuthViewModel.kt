@@ -77,6 +77,8 @@ class AuthViewModel: ViewModel() {
         )
     }
 
+
+
     fun register(){
         val userData = UserDataRequest(email,password,rpassword,username,type)
         registerResponse.postValue(Resource.loading(null))

@@ -4,6 +4,7 @@ import com.example.studo.data.model.Job
 import com.example.studo.data.model.User
 import com.example.studo.data.model.request.JobApplicationRequest
 import com.example.studo.data.model.request.NewJobRequest
+import com.example.studo.data.model.request.TokenRequest
 import com.example.studo.data.model.request.UserDataRequest
 import com.example.studo.data.model.response.*
 import retrofit2.Call
@@ -44,4 +45,9 @@ interface ApiService {
     @DELETE ("users/{userId}/jobApplications/{applicationId}")
     fun cancelApplication(@Path("userId") userId: Int, @Path("applicationId") applicationId: Int) : Call<ApplicationResponse>
 
+    @POST("saveToken/{userId}")
+    fun sendTokenToServer(@Body tokenRequest: TokenRequest ,@Path("userId") userId: Int): Call<Void>
+
+    @DELETE("deleteToken/{userId}")
+    fun deleteToken(@Path("userId") userId: Int): Call<Void>
 }

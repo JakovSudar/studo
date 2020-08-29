@@ -81,13 +81,14 @@
 
     <TextView
         android:id="@+id/opis"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:text="Neki opis "
         android:textSize="20dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/opisTitle"
         app:layout_constraintTop_toBottomOf="@+id/city" />
 
@@ -104,13 +105,14 @@
 
     <TextView
         android:id="@+id/zahtjevi"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:text="Neki zahtjevi"
         android:textSize="20dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/zahtjeviTitle"
         app:layout_constraintTop_toBottomOf="@+id/opis" />
 

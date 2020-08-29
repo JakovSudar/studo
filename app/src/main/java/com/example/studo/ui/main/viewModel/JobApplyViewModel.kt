@@ -15,7 +15,6 @@ class JobApplyViewModel : ViewModel() {
     var phone = MutableLiveData<String>()
     var email = MutableLiveData<String>()
     var jobId : Int = -1
-
     var step = MutableLiveData<Int>()
     var applicationResponse = MutableLiveData<Resource<JobApplicationRequest>>()
 
@@ -31,7 +30,12 @@ class JobApplyViewModel : ViewModel() {
                 call: Call<JobApplicationRequest>,
                 response: Response<JobApplicationRequest>
             ) {
-                applicationResponse.postValue(Resource.success(response.body()))
+                if(response.code()==405){
+                    applicationResponse.postValue(Resource.error("Nemoguće vas je prijaviti!",null))
+                }else{
+                    applicationResponse.postValue(Resource.success(response.body()))
+                }
+
             }
         })
     }

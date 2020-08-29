@@ -74,7 +74,6 @@ class LoginFragment() : Fragment() {
     }
 
     private fun setUpUi() {
-
         registerBtn.setOnClickListener{
             this.authViewModel.showRegister()
         }
@@ -82,15 +81,12 @@ class LoginFragment() : Fragment() {
             clearErrors()
             processLogin()
         }
-
     }
 
     private fun processLogin() {
         hideKeyboard()
         authViewModel.password = et_password.text.toString()
         authViewModel.email = (et_email.text.toString())
-        authViewModel.email = "esther.hermiston@example.net"
-        authViewModel.password = "secret"
         checkInputs()
         if(!hasError){
             authViewModel.login()

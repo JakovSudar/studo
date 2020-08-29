@@ -69,11 +69,12 @@ class ProfileFragment(val user: User) : Fragment() {
     }
 
     private fun logOut() {
+        mainViewModel.deleteToken()
         (activity as MainActivity).onLoggedOut()
         PreferenceManager().deleteUser()
-        Log.d("PREFS", PreferenceManager().retriveUser().toString())
         mainViewModel.setUser(User(DEF_VAL,DEF_VAL,DEF_VAL,-1,-1,DEF_VAL))
         activity!!.supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right).remove(this).commit()
+
     }
 
     override fun onResume() {

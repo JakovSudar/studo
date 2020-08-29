@@ -15,6 +15,7 @@ import com.example.studo.ui.main.view.steps.FirstStepFragment
 import com.example.studo.ui.main.view.steps.SecondStepFragment
 import com.example.studo.ui.main.view.steps.ThirdStepFragment
 import com.example.studo.ui.main.viewModel.JobApplyViewModel
+import com.example.studo.utils.Resource
 import com.example.studo.utils.Status
 import kotlinx.android.synthetic.main.job_apply_dialog.*
 import java.lang.Exception
@@ -58,18 +59,26 @@ class JobApplyDialog(val job: Job) : DialogFragment() {
         this.applyViewModel.applicationResponse.observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
+                    Log.d("DEBUK", "SUCCESS")
                     progressBar.visibility = View.GONE
                     tv_progress.visibility = View.GONE
-                    Toast.makeText(context,"Prijavljeni ste na posao", Toast.LENGTH_SHORT).show()
-                    dismiss()
+                    Toast.makeText(context,"Prijavljeni ste na posao!", Toast.LENGTH_SHORT).show()
+                    this.applyViewModel.step.value = 1
+                    this.applyViewModel.applicationResponse.value = Resource.nothing(null)
+                    this.dismiss()
                 }
                 Status.LOADING->{
+                    Log.d("DEBUK", "LOADING")
                     progressBar.visibility = View.VISIBLE
                     tv_progress.visibility = View.VISIBLE
                 }
                 Status.ERROR->{
+                    Toast.makeText(context,"Već ste prijavljeni!", Toast.LENGTH_SHORT).show()
                     progressBar.visibility = View.GONE
                     tv_progress.visibility = View.GONE
+                    this.applyViewModel.step.value = 1
+                    this.applyViewModel.applicationResponse.value = Resource.nothing(null)
+                    this.dismiss()
                 }
             }
         })
@@ -78,7 +87,6 @@ class JobApplyDialog(val job: Job) : DialogFragment() {
     private fun applyToJob() {
         applyViewModel.jobId =job.id
         applyViewModel.applyToJob()
-
     }
 
     private fun goToThirdStep() {
@@ -92,7 +100,6 @@ class JobApplyDialog(val job: Job) : DialogFragment() {
         fm.beginTransaction().setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right).
         replace(R.id.frameLayout,thirdStepFragment,"step1").
         commit()
-
     }
 
     private fun goToFirstStep() {

@@ -1,5 +1,6 @@
 package com.example.studo.ui.main.viewModel
 
+import android.media.session.MediaSession
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.studo.data.api.Networking
 import com.example.studo.data.model.Job
 import com.example.studo.data.model.User
+import com.example.studo.data.model.request.TokenRequest
 import com.example.studo.data.model.response.ApplicationResponse
 import com.example.studo.data.model.response.JobsResponse
 import com.example.studo.helpers.PreferenceManager
@@ -34,7 +36,7 @@ class MainViewModel() :ViewModel(){
         fetchJobs()
     }
 
-    private fun fetchJobs() {
+    fun fetchJobs() {
         jobs.postValue(Resource.loading(null))
 
         Networking.apiService.getJobs().enqueue(
@@ -110,7 +112,29 @@ class MainViewModel() :ViewModel(){
         })
     }
 
+    fun saveToken(fcmToken: String){
+        Networking.apiService.sendTokenToServer(TokenRequest(fcmToken), user.id).enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("TOKENRESPONSE error", t.message)
+            }
 
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Log.d("TOKENRESPONSE", response.body().toString())
+            }
+        })
+    }
+
+    fun deleteToken(){
+        Networking.apiService.deleteToken(user.id).enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("deleteToken error", t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Log.d("deleteToken", "success")
+            }
+        })
+    }
 
     fun deleteJob(job: Job){
         Networking.apiService.deleteJob(user.id, job.id).enqueue(object : Callback<Job>{
@@ -142,10 +166,8 @@ class MainViewModel() :ViewModel(){
         })
     }
 
-    fun getJob(jobId:Int){
-        val chosenJob = jobsList.filter { job -> job.id == jobId }.single()
-        Log.d("jobsList:", chosenJob.toString())
-        this.job.postValue(chosenJob)
+    fun getJob(job: Job){
+        this.job.postValue(job)
     }
 
     fun getProfileJobs(): LiveData<Resource<List<Job>>>{

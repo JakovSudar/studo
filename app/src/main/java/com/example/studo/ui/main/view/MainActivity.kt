@@ -2,12 +2,14 @@ package com.example.studo.ui.main.view
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,17 +18,21 @@ import com.example.studo.R
 import com.example.studo.data.model.Job
 import com.example.studo.data.model.User
 import com.example.studo.helpers.PreferenceManager
+import com.example.studo.helpers.createNotificationChannels
 import com.example.studo.ui.auth.view.AuthActivity
 import com.example.studo.ui.main.adapter.HOMEPAGE
 import com.example.studo.ui.main.adapter.MainAdapter
+import com.example.studo.ui.main.viewModel.JobApplyViewModel
 import com.example.studo.ui.main.viewModel.MainViewModel
 import com.example.studo.utils.Status
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.applied_students_dialog.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainViewModel: MainViewModel
+
     private lateinit var adapter : MainAdapter
 
     companion object{
@@ -41,12 +47,41 @@ class MainActivity : AppCompatActivity() {
         getLoggedUser()
         setUpUi()
         setUpObserver()
+        checkForExtras()
+        setNotificationChannels()
+    }
+
+    private fun setNotificationChannels() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) createNotificationChannels()
+    }
+
+    private fun checkForExtras() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            var gson = Gson()
+            var job = gson?.fromJson(bundle!!["job"].toString(), Job::class.java)
+            var type = bundle!!["type"].toString()
+            if(type == "student"){
+                mainViewModel.getJob(job)
+            }else if(type =="employer"){
+                mainViewModel.showJobApplications(job)
+            }
+        }
+    }
+
+    private fun sendFirebaseToken() {
+        val refreshedToken = FirebaseInstanceId.getInstance().token
+        Log.d("POSLAN TOKEN", "Refreshed token: $refreshedToken")
+        mainViewModel.saveToken(refreshedToken!!)
     }
 
     private fun getLoggedUser() {
         val user : User =  PreferenceManager().retriveUser()
         mainViewModel.setUser(user)
         Log.d("Logged User", user.toString())
+        if(mainViewModel.hasToken()){
+            sendFirebaseToken()
+        }
     }
 
     private fun setUpUi() {
@@ -75,6 +110,10 @@ class MainActivity : AppCompatActivity() {
         btn_addJob?.setOnClickListener {
             openNewJobDialog()
         }
+
+        swipeRefresh.setOnRefreshListener {
+            mainViewModel.fetchJobs()
+        }
     }
 
     private fun startAuthActivity() {
@@ -99,16 +138,16 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getJobs().observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
-                    progressBar.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
                     it.data?.let { jobs -> renderList(jobs) }
                     recyclerView.visibility = View.VISIBLE
                 }
                 Status.LOADING ->{
-                    progressBar.visibility = View.VISIBLE
+                    swipeRefresh.isRefreshing = true
                     recyclerView.visibility = View.GONE
                 }
                 Status.ERROR->{
-                    progressBar.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -144,16 +183,16 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.postedJob.observe(this, Observer {
             when(it.status){
                 Status.SUCCESS->{
-                    progressBar.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
                     Toast.makeText(this,"Posao je objavljen!", Toast.LENGTH_SHORT).show()
                     recyclerView.visibility = View.VISIBLE
                 }
                 Status.LOADING ->{
-                    progressBar.visibility = View.VISIBLE
+                    swipeRefresh.isRefreshing = true
                     recyclerView.visibility = View.GONE
                 }
                 Status.ERROR->{
-                    progressBar.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -165,9 +204,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-       mainViewModel = ViewModelProviders.of(
-           this
-       ).get(MainViewModel::class.java)
+       mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
     }
 
     private fun renderList(jobs: List<Job>) {

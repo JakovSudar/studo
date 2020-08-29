@@ -45,10 +45,10 @@ class MainAdapter(
                         mainViewModel.showJobApplications(job)
                     }
                     STUDENT_PROFILE ->{
-                        mainViewModel.getJob(job.id)
+                        mainViewModel.getJob(job)
                     }
                     HOMEPAGE->{
-                        mainViewModel.getJob(job.id)
+                        mainViewModel.getJob(job)
                     }
                 }
             }
